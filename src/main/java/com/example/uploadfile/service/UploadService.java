@@ -5,6 +5,7 @@ import com.example.uploadfile.dto.UploadFileResponse;
 import com.example.uploadfile.excepion.FileContentTypeException;
 import com.example.uploadfile.excepion.FileNotFoundException;
 import com.example.uploadfile.excepion.FileStorageException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,9 @@ import java.io.IOException;
 @Service
 public class UploadService {
 
-    private static String UPLOADED_FOLDER = "C://files//";
+    @Value("${upload.path}")
+    private String path;
+
 
     public UploadFileResponse storeFile(MultipartFile multipartFile) {
         if (multipartFile == null) {
@@ -29,7 +32,7 @@ public class UploadService {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-        File file = new File(UPLOADED_FOLDER + multipartFile.getOriginalFilename());
+        File file = new File(path + multipartFile.getOriginalFilename());
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {

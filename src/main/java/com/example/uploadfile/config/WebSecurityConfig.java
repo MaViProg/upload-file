@@ -7,6 +7,7 @@ import com.example.uploadfile.data.user.MyUserRepository;
 import com.example.uploadfile.service.ConfigAdminUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.ldap.LdapProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -58,6 +59,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider;
 
+    @Value("${application.ldap.domain}")
+    private String domain;
+
+    @Value("${application.ldap.url}")
+    private String url;
+
+    @Value("${application.ldap.rootDn}")
+    private String rootDn;
+
 
     @Bean
     @ConditionalOnProperty(name = "spring.customized.suite.auth_type", havingValue = "local_user")
@@ -84,12 +94,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
+
+
     @Bean
-    @ConditionalOnProperty(name = "spring.customized.suite.auth_type", havingValue = "ldap")
-    ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
-        ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider = new ActiveDirectoryLdapAuthenticationProvider(null, ldapProperties.getUrls() != null && ldapProperties.getUrls().length >= 1 ? ldapProperties.getUrls()[0] : null, ldapProperties.getBase());
-        activeDirectoryLdapAuthenticationProvider.setUserDetailsContextMapper(userDetailsContextMapper());
-        return activeDirectoryLdapAuthenticationProvider;
+    public ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
+        ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(domain,
+                url, rootDn);
+        provider.setConvertSubErrorCodesToExceptions(true);
+        provider.setUseAuthenticationRequestCredentials(true);
+        provider.setUserDetailsContextMapper(userDetailsContextMapper());
+        return provider;
     }
 
     @Override

@@ -10,11 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
-/**
- * k-suite config
- *
- * @author zhangchao
- */
 @Component
 @Getter
 @Setter

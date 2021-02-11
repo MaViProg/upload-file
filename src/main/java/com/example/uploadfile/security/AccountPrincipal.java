@@ -18,19 +18,13 @@ import java.util.Collections;
 @NoArgsConstructor
 public class AccountPrincipal implements UserDetails {
 
-    /**
-     * account.username
-     */
+
     String username;
 
-    /**
-     * account.password
-     */
+
     String password;
 
-    /**
-     * who is an admin
-     */
+
     boolean admin;
 
     @Override
