@@ -35,8 +35,4 @@ public class CustomUserDetailsMapper extends LdapUserDetailsMapper {
         return ldapUser;
     }
 
-//    @Override
-//    public void mapUserToContext(UserDetails userDetails, DirContextAdapter dirContextAdapter) {
-//
-//    }
 }

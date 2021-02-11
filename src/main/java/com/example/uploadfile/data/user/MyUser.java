@@ -18,7 +18,7 @@ public class MyUser {
 
     @Column(unique = true)
     private String username;
-    private boolean isEnabled = true; // enabled by default
+    private boolean isEnabled = true;
 
     public MyUser(String username) {
         this.username = username;

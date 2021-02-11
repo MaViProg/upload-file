@@ -9,11 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-/**
- * account info
- *
- * @author zhangchao
- */
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter

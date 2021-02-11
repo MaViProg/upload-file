@@ -1,16 +1,9 @@
 package com.example.uploadfile.security;
 
-/**
- * roles
- *
- * @author zhangchao
- */
+
 public enum AuthorityRole {
 
-    /**
-     * visitor
-     */
-    ROLE_VISITOR,
+
 
     /**
      * user

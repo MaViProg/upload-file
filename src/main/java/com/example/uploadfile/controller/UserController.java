@@ -1,4 +1,4 @@
-package com.example.uploadfile.web;
+package com.example.uploadfile.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class WelcomeController {
+public class UserController {
 
     @GetMapping("/")
     public String welcome() {

@@ -30,15 +30,12 @@ import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 
 import java.util.Collection;
 
-/**
- * @author zhangchao
- */
+
 @EnableWebSecurity
 @Slf4j
 @Order(1)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableConfigurationProperties(LdapProperties.class)
-  //  @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthoritiesRepository authoritiesRepository;
