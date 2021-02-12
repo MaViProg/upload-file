@@ -59,14 +59,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider;
 
-    @Value("${application.ldap.domain}")
-    private String domain;
-
-    @Value("${application.ldap.url}")
-    private String url;
-
-    @Value("${application.ldap.rootDn}")
-    private String rootDn;
+//    @Value("${application.ldap.domain}")
+//    private String domain;
+//
+//    @Value("${application.ldap.url}")
+//    private String url;
+//
+//    @Value("${application.ldap.rootDn}")
+//    private String rootDn;
 
 
     @Bean
@@ -97,13 +97,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    public ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
-        ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(domain,
-                url, rootDn);
-        provider.setConvertSubErrorCodesToExceptions(true);
-        provider.setUseAuthenticationRequestCredentials(true);
-        provider.setUserDetailsContextMapper(userDetailsContextMapper());
-        return provider;
+    @ConditionalOnProperty(name = "spring.customized.suite.auth_type", havingValue = "ldap")
+    ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
+        ActiveDirectoryLdapAuthenticationProvider activeDirectoryLdapAuthenticationProvider = new ActiveDirectoryLdapAuthenticationProvider(null, ldapProperties.getUrls() != null && ldapProperties.getUrls().length >= 1 ? ldapProperties.getUrls()[0] : null, ldapProperties.getBase());
+        activeDirectoryLdapAuthenticationProvider.setUserDetailsContextMapper(userDetailsContextMapper());
+        return activeDirectoryLdapAuthenticationProvider;
     }
 
     @Override
