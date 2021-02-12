@@ -3,6 +3,7 @@ package com.example.uploadfile.service;
 
 import com.example.uploadfile.dto.UploadFileResponse;
 import com.example.uploadfile.excepion.FileContentTypeException;
+import com.example.uploadfile.excepion.FileNameException;
 import com.example.uploadfile.excepion.FileNotFoundException;
 import com.example.uploadfile.excepion.FileStorageException;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +27,12 @@ public class UploadService {
             throw new FileNotFoundException("Cannot find file");
         }
 
-        if (!multipartFile.getContentType().equals("py")) {
+        if (!"py".equals(multipartFile.getContentType())) {
             throw new FileContentTypeException("invalid content type");
+        }
+
+        if (multipartFile.getOriginalFilename()== null) {
+            throw new FileNameException("Invalid file name");
         }
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -36,7 +41,7 @@ public class UploadService {
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {
-            new FileStorageException("Could not store file " + fileName + ". Please try again!");
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!");
         }
 
         return new UploadFileResponse(fileName, multipartFile.getContentType(), multipartFile.getSize());
