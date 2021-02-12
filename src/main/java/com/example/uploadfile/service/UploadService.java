@@ -26,7 +26,7 @@ public class UploadService {
             throw new FileNotFoundException("Cannot find file");
         }
 
-        if (multipartFile.getContentType().equals("py")) {
+        if (!multipartFile.getContentType().equals("py")) {
             throw new FileContentTypeException("invalid content type");
         }
 
