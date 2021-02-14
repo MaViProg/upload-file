@@ -127,7 +127,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll() // Open for all
+//                .antMatchers("/**").permitAll() // Open for all
+                .antMatchers("/admin").permitAll() // Open for all
+                .antMatchers("/webjars/**").permitAll() // Open for all
                 .anyRequest().authenticated() // All others requires authentication
                 .and()
                 .formLogin()
